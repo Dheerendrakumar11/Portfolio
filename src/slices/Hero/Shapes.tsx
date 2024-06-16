@@ -1,9 +1,10 @@
+
 "use client";
 
 import * as THREE from "three";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { ContactShadows, Float, Environment } from "@react-three/drei";
-import { Suspense, useState, useRef, useEffect } from "react";
+import { Suspense, useState, useRef, useEffect, MutableRefObject } from "react";
 import { gsap } from "gsap";
 
 export function Shapes() {
@@ -127,7 +128,7 @@ const Geometry: React.FC<GeometryProps> = ({
   materials,
   soundEffects,
 }) => {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const meshRef = useRef<THREE.Mesh>(null) as MutableRefObject<THREE.Mesh>;
   const [visible, setVisible] = useState(false);
 
   function getRandomMaterial(): THREE.Material {
@@ -137,7 +138,7 @@ const Geometry: React.FC<GeometryProps> = ({
   const startingMaterial = getRandomMaterial();
 
   function handleClick(e: THREE.Event) {
-    const mesh = e.object as THREE.Mesh;
+    const mesh = e.target as THREE.Mesh;
     gsap.utils.random(soundEffects).play();
 
     gsap.to(mesh.rotation, {
@@ -179,9 +180,10 @@ const Geometry: React.FC<GeometryProps> = ({
   }, []);
 
   return (
-    <group position={position} ref={meshRef} className='p-4'>
+    <group position={position} >
       <Float speed={5 * r} rotationIntensity={6 * r} floatIntensity={5 * r}>
         <mesh
+          ref={meshRef}
           geometry={geometry}
           onClick={handleClick}
           onPointerOver={handlePointerOver}
