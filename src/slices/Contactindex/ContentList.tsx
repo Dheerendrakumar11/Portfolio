@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MdArrowOutward } from "react-icons/md";
 import { Content } from "@prismicio/client";
 
-gsap.registerPlugin(ScrollTrigger); 
+gsap.registerPlugin(ScrollTrigger);
 
 type ContentListProps = {
   items: Content.BlogPostDocument[] | Content.ProjectDocument[];
@@ -22,9 +22,11 @@ export default function ContentList({
   fallbackItemImage,
   viewMoreText = "Read More",
 }: ContentListProps) {
-  const component = useRef(null);
-  const itemsRef = useRef<Array<HTMLLIElement | null>>([]);
-  const revealRef = useRef(null);
+  const component = useRef<HTMLUListElement | null>(null);
+  const itemsRef = useRef<(HTMLLIElement | null)[]>([]);
+  const revealRef = useRef<HTMLDivElement | null>(null);
+  // const ref = useRef<HTMLLIElement | null>(null);
+  
   const [currentItem, setCurrentItem] = useState<null | number>(null);
   const [hovering, setHovering] = useState(false);
   const lastMousePos = useRef({ x: 0, y: 0 });
@@ -68,7 +70,7 @@ export default function ContentList({
       const mousePos = { x: e.clientX, y: e.clientY + window.scrollY };
       const speed = Math.sqrt(Math.pow(mousePos.x - lastMousePos.current.x, 2));
 
-      if (currentItem !== null) {
+      if (currentItem !== null && revealRef.current) {
         const maxY = window.scrollY + window.innerHeight - 350;
         const maxX = window.innerWidth - 250;
 
@@ -137,7 +139,10 @@ export default function ContentList({
         {items.map((post, index) => (
           <li
             key={index}
-            ref={(el) => (itemsRef.current[index] = el)}
+            ref={(el) => {
+              itemsRef.current[index] = el;
+            }}
+            
             onMouseEnter={() => onMouseEnter(index)}
             className="list-item opacity-0"
           >
