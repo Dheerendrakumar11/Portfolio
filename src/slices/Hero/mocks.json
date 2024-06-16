@@ -1,0 +1,29 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"first_name": {
+				"__TYPE__": "FieldContent",
+				"value": "ask",
+				"type": "Text"
+			},
+			"last_name": {
+				"__TYPE__": "FieldContent",
+				"value": "express",
+				"type": "Text"
+			},
+			"tag_line": {
+				"__TYPE__": "FieldContent",
+				"value": "mistake",
+				"type": "Text"
+			},
+			"middle_name": {
+				"__TYPE__": "FieldContent",
+				"value": "slept",
+				"type": "Text"
+			}
+		},
+		"items": []
+	}
+]
